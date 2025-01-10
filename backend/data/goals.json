@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "estimatedExpense": 25000,
+    "targetAmount": 5000,
+    "totalExpenses": 0,
+    "remainingAmount": 25000,
+    "dueDate": "01/01/2025",
+    "createdAt": "2025-01-10T19:13:42.583Z",
+    "dueDateObj": "2025-01-01T18:30:00.000Z",
+    "userId": 1
+  },
+  {
+    "id": 2,
+    "userId": null,
+    "estimatedExpense": 25000,
+    "targetAmount": 5000,
+    "totalExpenses": 0,
+    "remainingAmount": 25000,
+    "dueDateObj": "2025-01-01T18:30:00.000Z",
+    "createdAt": "2025-01-10T19:17:23.836Z"
+  }
+]
