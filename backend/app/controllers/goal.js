@@ -72,24 +72,36 @@ async function updateGoal(req, res) {
 }
 
 async function increaseExpense(userId, amount) {
-  const goalIndex = savingsGoals.findIndex((goal) => goal.userId === userId);
+  const currentDate = new Date();
 
-  if (goalIndex === -1) {
+  const userGoals = savingsGoals.filter(
+    (goal) => goal.userId === userId && new Date(goal.dueDateObj) > currentDate
+  );
+  console.log(userGoals);
+
+  if (userGoals.length === 0) {
     return;
   }
 
-  const goal = savingsGoals[goalIndex];
-  const newTotalExpenses = goal.totalExpenses + amount;
-  const newRemainingAmount = goal.estimatedExpense - newTotalExpenses;
+  userGoals.forEach((goal) => {
+    const goalIndex = savingsGoals.findIndex((g) => g.id === goal.id);
+    console.log(goalIndex);
+    console.log(savingsGoals[goalIndex]);
 
-  savingsGoals[goalIndex] = {
-    ...goal,
-    totalExpenses: newTotalExpenses,
-    remainingAmount: newRemainingAmount,
-  };
+    if (goalIndex !== -1) {
+      const newTotalExpenses = goal.totalExpenses + amount;
+      const newRemainingAmount = goal.estimatedExpense - newTotalExpenses;
+
+      savingsGoals[goalIndex] = {
+        ...goal,
+        totalExpenses: newTotalExpenses,
+        remainingAmount: newRemainingAmount,
+      };
+    }
+  });
 
   saveData("./data/goals.json", savingsGoals);
-  console.log("Expense increased successfully");
+  console.log("Expenses increased successfully for all applicable goals");
 }
 
 module.exports = { createGoal, getGoals, updateGoal, increaseExpense };
