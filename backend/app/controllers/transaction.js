@@ -23,14 +23,15 @@ async function getTransactions(req, res) {
   if (userTransactions.length === 0) {
     return res.status(404).send("No transactions found");
   }
-
+  console.log(userTransactions);
   // Respond with the filtered transactions
   res.status(200).json(userTransactions);
 }
 
 async function addTransaction(req, res) {
-  const { userId, amount, category, description } = req.body;
-
+  const { amount, category, description } = req.body;
+  let { userId } = req.body;
+  userId = parseInt(userId);
   const userExists = users.some((user) => user.id == userId);
   if (!userExists) {
     return res.status(404).send("User not found");
@@ -54,7 +55,7 @@ async function addTransaction(req, res) {
 
 async function updateTransaction(req, res) {
   const { id } = req.params;
-  const { userId, amount, category, description } = req.body;
+  const { amount, category, description } = req.body;
 
   const transactionIndex = transactions.findIndex(
     (transaction) => transaction.id == id
@@ -65,14 +66,11 @@ async function updateTransaction(req, res) {
   }
   let previousAmount = transactions[transactionIndex].amount;
 
-  transactions[transactionIndex] = {
-    id,
-    userId,
-    amount,
-    category,
-    description,
-  };
+  transactions[transactionIndex].amount = amount;
+  transactions[transactionIndex].category = category;
+  transactions[transactionIndex].description = description;
 
+  const userId = transactions[transactionIndex].userId;
   saveData("./data/transactions.json", transactions);
   increaseExpense(userId, amount - previousAmount);
 

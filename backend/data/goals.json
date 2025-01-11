@@ -4,8 +4,8 @@
     "userId": 1,
     "estimatedExpense": 25000,
     "targetAmount": 5000,
-    "totalExpenses": 90,
-    "remainingAmount": 24910,
+    "totalExpenses": "1002002500200101",
+    "remainingAmount": -1002002500175101,
     "dueDateObj": "2025-02-01T18:30:00.000Z",
     "createdAt": "2025-01-10T20:24:14.434Z"
   },

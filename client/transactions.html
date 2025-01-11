@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Transactions</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Your Transactions</h1>
+
+    <!-- New Transaction Form -->
+    <div id="newTransactionForm">
+      <h2>Add New Transaction</h2>
+      <form id="addTransactionForm">
+        <input type="number" id="newAmount" placeholder="Amount" required />
+        <input type="text" id="newCategory" placeholder="Category" required />
+        <input type="text" id="newDescription" placeholder="Description" required />
+        <button type="submit">Add Transaction</button>
+      </form>
+    </div>
+
+    <!-- Transactions Table -->
+    <table id="transactionsTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Amount</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Transactions will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

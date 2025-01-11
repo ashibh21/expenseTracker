@@ -16,7 +16,10 @@ async function registerUser(req, res) {
 
   users.push(newUser);
   saveData("./data/users.json", users);
-  res.status(201).send("User created successfully");
+  res.status(201).json({
+    message: "User created successfully",
+    userId: newUser.id,
+  });
 }
 
 async function loginUser(req, res) {
@@ -31,7 +34,10 @@ async function loginUser(req, res) {
   if (!validPassword) {
     return res.status(400).send("Invalid password");
   }
-  res.json({ message: `Welcome` });
+  res.json({
+    message: `Welcome`,
+    userId: user.id,
+  });
 }
 
 module.exports = { registerUser, loginUser };

@@ -2,8 +2,48 @@
   {
     "id": "1",
     "userId": 1,
-    "amount": 90,
+    "amount": "100",
     "category": "shoping",
     "description": "very good"
+  },
+  {
+    "id": 2,
+    "userId": 1,
+    "amount": "12",
+    "date": "2025-01-10T21:13:05.264Z",
+    "category": "party",
+    "description": "great party"
+  },
+  {
+    "id": 3,
+    "userId": 1,
+    "amount": "200",
+    "date": "2025-01-11T03:45:35.345Z",
+    "category": "travel",
+    "description": "delhi"
+  },
+  {
+    "id": 4,
+    "userId": 1,
+    "amount": "2",
+    "date": "2025-01-11T03:46:04.220Z",
+    "category": "travel",
+    "description": "great party"
+  },
+  {
+    "id": 5,
+    "userId": 1,
+    "amount": "500",
+    "date": "2025-01-11T03:46:36.426Z",
+    "category": "acdsvf",
+    "description": "adcsfv"
+  },
+  {
+    "id": 6,
+    "userId": 1,
+    "amount": "211",
+    "date": "2025-01-11T03:48:55.904Z",
+    "category": "acdsvf",
+    "description": "great party"
   }
 ]
