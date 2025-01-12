@@ -1,21 +1,21 @@
 const { loadData, saveData } = require("../../../utils/utils.js");
 
 let savingsGoals = loadData("./data/goals.json");
-let transactions = loadData("./data/transaction.json");
 
 async function createGoal(req, res) {
   const { estimatedExpense, targetAmount, dueDate } = req.body;
   let { userId } = req.params;
   userId = parseInt(userId);
-  const dueDateObj = new Date(dueDate);
+  const [day, month, year] = dueDate.split("-");
+  const dueDateObj = new Date(`${year}-${month}-${day}T00:00:00.000Z`);
 
   const newGoal = {
     id: savingsGoals.length + 1,
     userId: userId,
-    estimatedExpense,
-    targetAmount,
+    estimatedExpense: parseFloat(estimatedExpense),
+    targetAmount: parseFloat(targetAmount),
     totalExpenses: 0, // Start with no expenses
-    remainingAmount: estimatedExpense,
+    remainingAmount: parseFloat(estimatedExpense),
     dueDateObj,
     createdAt: new Date().toISOString(),
   };
@@ -23,9 +23,11 @@ async function createGoal(req, res) {
   savingsGoals.push(newGoal);
   saveData("./data/goals.json", savingsGoals);
 
-  res
-    .status(201)
-    .json({ message: "Savings goal created successfully", goal: newGoal });
+  res.status(201).json({
+    success: true,
+    data: [],
+    message: "Goal created successfully",
+  });
 }
 
 async function getGoals(req, res) {
@@ -34,28 +36,43 @@ async function getGoals(req, res) {
   const userGoals = savingsGoals.filter((goal) => goal.userId === userId);
 
   if (userGoals.length === 0) {
-    return res.status(404).send("No savings goals found");
+    return res.status(404).json({
+      success: true,
+      data: [],
+      message: "No goals found for this user",
+    });
   }
 
-  res.status(200).json(userGoals);
+  res.status(200).json({
+    success: true,
+    data: userGoals,
+    message: "Goals fetched successfully",
+  });
 }
 
 async function updateGoal(req, res) {
   let { id } = req.params;
   id = parseInt(id);
 
-  const { estimatedExpense, targetAmount, dueDate, userId } = req.body;
-  const dueDateObj = new Date(dueDate);
+  const { estimatedExpense, targetAmount, dueDate } = req.body;
+  let { userId } = req.body;
+  userId = parseInt(userId);
+  const [day, month, year] = dueDate.split("-");
+  const dueDateObj = new Date(`${year}-${month}-${day}T00:00:00.000Z`);
 
   const goalIndex = savingsGoals.findIndex((goal) => goal.id === id);
 
   if (goalIndex === -1) {
-    return res.status(404).send("Savings goal not found");
+    return res.status(404).json({
+      success: true,
+      data: [],
+      message: "Goal not found",
+    });
   }
 
   savingsGoals[goalIndex].userId = userId;
-  savingsGoals[goalIndex].estimatedExpense = estimatedExpense;
-  savingsGoals[goalIndex].targetAmount = targetAmount;
+  savingsGoals[goalIndex].estimatedExpense = parseFloat(estimatedExpense);
+  savingsGoals[goalIndex].targetAmount = parseFloat(targetAmount);
   savingsGoals[goalIndex].dueDateObj = dueDateObj;
 
   //   = {
@@ -68,16 +85,20 @@ async function updateGoal(req, res) {
 
   saveData("./data/goals.json", savingsGoals);
 
-  res.status(200).json({ message: "Savings goal updated successfully" });
+  res.status(200).json({
+    success: true,
+    data: [],
+    message: "Savings goal updated successfully",
+  });
 }
 
 async function increaseExpense(userId, amount) {
   const currentDate = new Date();
-
+  console.log("userId: ", userId, amount);
   const userGoals = savingsGoals.filter(
     (goal) => goal.userId === userId && new Date(goal.dueDateObj) > currentDate
   );
-  console.log(userGoals);
+  console.log("goals of user:", userGoals);
 
   if (userGoals.length === 0) {
     return;
@@ -85,12 +106,14 @@ async function increaseExpense(userId, amount) {
 
   userGoals.forEach((goal) => {
     const goalIndex = savingsGoals.findIndex((g) => g.id === goal.id);
-    console.log(goalIndex);
-    console.log(savingsGoals[goalIndex]);
+    console.log("goalindex", goalIndex);
+    console.log("saving", savingsGoals[goalIndex]);
 
     if (goalIndex !== -1) {
-      const newTotalExpenses = goal.totalExpenses + amount;
-      const newRemainingAmount = goal.estimatedExpense - newTotalExpenses;
+      const newTotalExpenses =
+        parseFloat(goal.totalExpenses) + parseFloat(amount);
+      const newRemainingAmount =
+        parseFloat(goal.estimatedExpense) - parseFloat(newTotalExpenses);
 
       savingsGoals[goalIndex] = {
         ...goal,
@@ -101,7 +124,7 @@ async function increaseExpense(userId, amount) {
   });
 
   saveData("./data/goals.json", savingsGoals);
-  console.log("Expenses increased successfully for all applicable goals");
+  console.log("Expenses increased successfully for all applicable goals yo");
 }
 
 module.exports = { createGoal, getGoals, updateGoal, increaseExpense };
