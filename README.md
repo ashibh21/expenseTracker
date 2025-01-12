@@ -62,7 +62,8 @@ The CLI is built using Node.js with the inquirer library for user interaction an
 
 
 
-
+## TEST CASES 
+- https://docs.google.com/document/d/1lcvXTKyiNFDNsv2ADrXGFxNaJDl_xKMu2B5ubZ4op-M/edit?usp=sharing
 ## Setup Instructions
 
 ### Prerequisites
