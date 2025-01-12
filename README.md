@@ -64,6 +64,8 @@ The CLI is built using Node.js with the inquirer library for user interaction an
 
 ## TEST CASES 
 - https://docs.google.com/document/d/1lcvXTKyiNFDNsv2ADrXGFxNaJDl_xKMu2B5ubZ4op-M/edit?usp=sharing
+## API contracts
+- https://www.postman.com/flight-cosmologist-82913118/workspace/expense-tracker/collection/34588375-b17af461-d88c-4b74-961e-755fc68d85d7?action=share&creator=34588375 
 ## Setup Instructions
 
 ### Prerequisites
